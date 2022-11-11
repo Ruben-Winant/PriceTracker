@@ -19,7 +19,7 @@ def main():
     df_updated = process_products(df)
     generate_history_data(df_updated)
     #   enable this to also show a price graph
-    #   visualize_price_history()
+    visualize_price_history()
 
 
 def visualize_price_history():
@@ -32,10 +32,11 @@ def visualize_price_history():
             for k, v in groupby(sorted(text, key=lambda x: (x.split(",")[1], x.split(",")[3])),
                                 key=lambda x: (x.split(",")[1], x.split(",")[3])):
                 product_name = " - ".join(list(k))
-                product_prices = [val.split(",")[-1] for val in v]
+                product_prices = [float(val.split(",")[-1]) for val in v]
                 plt.plot(unique_dates, product_prices, label=product_name)
 
         plt.xlabel("Datum")
+        plt.xticks(rotation=45)
         plt.ylabel("Prijs")
         plt.legend(loc='lower right')
         plt.show()
